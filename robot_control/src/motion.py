@@ -3,13 +3,14 @@ import rospy
 from geometry_msgs.msg import Point
 import time
 from std_msgs.msg import String
+from random import randint
 
 
 pub = rospy.Publisher('feedback', String, queue_size=10)
 
 def getTargetPos(data):
-    time.sleep(2)
-    print("Position reached ",data.x,data.y)
+    time.sleep(randint(1,10))
+    #print("Position reached ",data.x,data.y)
     pub.publish("arrived")
  
 def motion():

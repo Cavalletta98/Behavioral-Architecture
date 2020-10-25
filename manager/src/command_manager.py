@@ -5,7 +5,7 @@ import rospy
 import smach
 import smach_ros
 import time
-import random
+from random import randint
 from geometry_msgs.msg import Point
 from std_msgs.msg import String
 
@@ -17,7 +17,7 @@ person_pos = Point()
 person_pos.x = 8
 person_pos.y = 10
 
-pub_target_pos = rospy.Publisher('target_position', Point, queue_size=10)
+pub_target_pos = rospy.Publisher('target_position', Point, queue_size=1)
 
 # define state Play
 class play(smach.State):
@@ -27,41 +27,53 @@ class play(smach.State):
         self.arrived = 0
         self.transition = 0
         self.count = 0
+        self.transition_value = randint(1,10)
 
     def getFeedback(self,data):
         self.arrived = 1
     
     def getGesture(self,data):
-        pub_target_pos.publish(data)
-        while self.arrived == 0:
-            pass
-        self.arrived = 0
-        pub_target_pos.publish(person_pos)
+        if self.transition == 0:
+            pub_target_pos.publish(data)
+            while self.arrived == 0:
+                pass
+            print("Robot arrived in: ",data.x,data.y)
+            self.arrived = 0
+            pub_target_pos.publish(person_pos)
 
-        while self.arrived == 0:
-            pass
-        self.arrived = 0
-        self.count += 1
-        if self.count == 5:
-            self.transition = 1
+            while self.arrived == 0:
+                pass
+            print("Robot arrived in person position")
+            self.arrived = 0
+            self.count += 1
+            if self.count == self.transition_value:
+                self.transition = 1
 
         
     def execute(self, userdata):
         # function called when exiting from the node, it can be blacking
+        self.arrived = 0
+        self.transition = 0
+        self.count = 0
+        self.transition_value = randint(1,10)
         rospy.loginfo('Executing state PLAY')
 
-        rospy.Subscriber("feedback", String, self.getFeedback)
+        sub_feedback = rospy.Subscriber("feedback", String, self.getFeedback)
 
         pub_target_pos.publish(person_pos)
 
         while self.arrived == 0:
             pass
 
+        print("Robot arrived in person position")
+
         self.arrived = 0
-        rospy.Subscriber("gesture", Point, self.getGesture)
+        sub_gesture = rospy.Subscriber("gesture", Point, self.getGesture)
 
         while self.transition == 0:
             pass
+        sub_feedback.unregister()
+        sub_gesture.unregister()
         return 'someTimes'
 
 # define state Sleep
@@ -72,20 +84,22 @@ class sleep(smach.State):
         self.arrived = 0
 
     def getFeedback(self,data):
-        time.sleep(5)
+        time.sleep(randint(1,10))
         self.arrived = 1
         
     def execute(self, userdata):
         # function called when exiting from the node, it can be blacking
+        self.arrived = 0
         rospy.loginfo('Executing state SLEEP')
 
-        rospy.Subscriber("feedback", String, self.getFeedback)
+        sub_feedback = rospy.Subscriber("feedback", String, self.getFeedback)
 
         pub_target_pos.publish(home_pos)
         
         while self.arrived == 0:
             pass
-
+        print("Robot arrived in home")
+        sub_feedback.unregister()
         return 'wakeUp'
     
 
@@ -94,7 +108,6 @@ class normal(smach.State):
     def __init__(self):
         smach.State.__init__(self,outcomes=['play','someTimes'])
         self.arrived = 0
-        self.count = 0
         self.play = 0
 
     def getFeedback(self,data):
@@ -104,25 +117,30 @@ class normal(smach.State):
         self.play = 1
 
     def execute(self, userdata):
+
+        self.arrived = 0
+        self.play = 0
+
         rospy.loginfo('Executing state NORMAL')
 
-        rospy.Subscriber("command", String, self.getCommand)
-        rospy.Subscriber("feedback", String, self.getFeedback)
+        sub_command = rospy.Subscriber("command", String, self.getCommand)
+        sub_feedback = rospy.Subscriber("feedback", String, self.getFeedback)
+        count_value = randint(1,10)
 
-        while self.count < 2:
+        for count in range(0,count_value):
+            position = Point()
+            position.x = 6
+            position.y = 21
+            pub_target_pos.publish(position)
+
+            while self.arrived == 0:
+                pass
+            print("Robot arrived in: ",position.x,position.y)
             if self.play == 1:
+                sub_command.unregister()
                 return 'play'
-            else:
-                position = Point()
-                position.x = 6+self.count
-                position.y = 21+self.count
-                pub_target_pos.publish(position)
 
-                while self.arrived == 0:
-                    pass
-
-                self.count +=1
-
+        sub_feedback.unregister()
         return 'someTimes'
 
         
