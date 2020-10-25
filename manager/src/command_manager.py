@@ -10,12 +10,15 @@ from geometry_msgs.msg import Point
 from std_msgs.msg import String
 
 home_pos = Point()
-home_pos.x = 5
-home_pos.y = 5
+home_pos.x = rospy.get_param("home_pos_x")
+home_pos.y = rospy.get_param("home_pos_y")
 
 person_pos = Point()
-person_pos.x = 8
-person_pos.y = 10
+person_pos.x = rospy.get_param("person_pos_x")
+person_pos.y = rospy.get_param("person_pos_y")
+
+map_x = rospy.get_param("map_x")
+map_y = rospy.get_param("map_y")
 
 pub_target_pos = rospy.Publisher('target_position', Point, queue_size=1)
 
@@ -129,8 +132,8 @@ class normal(smach.State):
 
         for count in range(0,count_value):
             position = Point()
-            position.x = 6
-            position.y = 21
+            position.x = randint(1,map_x)
+            position.y = randint(1,map_y)
             pub_target_pos.publish(position)
 
             while self.arrived == 0:
