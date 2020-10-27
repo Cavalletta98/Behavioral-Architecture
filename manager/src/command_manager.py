@@ -40,13 +40,13 @@ class play(smach.State):
             pub_target_pos.publish(data)
             while self.arrived == 0:
                 pass
-            print("Robot arrived in: ",data.x,data.y)
+            rospy.loginfo("Robot arrived in (%d,%d)",data.x,data.y)
             self.arrived = 0
             pub_target_pos.publish(person_pos)
 
             while self.arrived == 0:
                 pass
-            print("Robot arrived in person position")
+            rospy.loginfo("Robot arrived in person position (%d,%d)",person_pos.x,person_pos.y)
             self.arrived = 0
             self.count += 1
             if self.count == self.transition_value:
@@ -68,7 +68,7 @@ class play(smach.State):
         while self.arrived == 0:
             pass
 
-        print("Robot arrived in person position")
+        rospy.loginfo("Robot arrived in person position (%d,%d)",person_pos.x,person_pos.y)
 
         self.arrived = 0
         sub_gesture = rospy.Subscriber("gesture", Point, self.getGesture)
@@ -101,7 +101,7 @@ class sleep(smach.State):
         
         while self.arrived == 0:
             pass
-        print("Robot arrived in home")
+        rospy.loginfo("Robot arrived in home (%d,%d)",home_pos.x,home_pos.y)
         sub_feedback.unregister()
         return 'wakeUp'
     
@@ -138,10 +138,13 @@ class normal(smach.State):
 
             while self.arrived == 0:
                 pass
-            print("Robot arrived in: ",position.x,position.y)
+            rospy.loginfo("Robot arrived in (%d,%d)",position.x,position.y)
             if self.play == 1:
+                rospy.loginfo("User says PLAY")
                 sub_command.unregister()
                 return 'play'
+            else:
+                self.arrived = 0
 
         sub_feedback.unregister()
         return 'someTimes'

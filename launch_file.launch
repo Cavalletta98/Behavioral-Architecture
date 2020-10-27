@@ -9,4 +9,9 @@
     <param name="map_x" type="int" value="20" />
     <param name="map_y" type="int" value="20" />
 
+    <node name="motion_node" pkg="robot_control" type="motion.py" respawn="true"/>
+    <node name="command_node" pkg="sensoring" type="command.py" respawn="true"/>
+    <node name="gesture_node" pkg="sensoring" type="gesture.py" respawn="true"/>
+    <node name="command_manager_state_machine" pkg="manager" type="command_manager.py" respawn="true" output="screen"/>
+
 </launch>
