@@ -6,8 +6,8 @@
     <param name="min_delay_command" type="double" value="1" />
     <param name="max_delay_command" type="double" value="10" />
 
-    <param name="min_delay_gesture" type="double" value="1" />
-    <param name="max_delay_gesture" type="double" value="10" />
+    <param name="min_delay_gesture" type="double" value="0.1" />
+    <param name="max_delay_gesture" type="double" value="1" />
 
     <param name="min_delay_robot_motion" type="double" value="0.1" />
     <param name="max_delay_robot_motion" type="double" value="1" />

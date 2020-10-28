@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+"""
+    ROS node that implement the FSM of 
+    robot behaviours
+"""
+
 import roslib
 import rospy
 import smach
@@ -33,18 +38,71 @@ pub_target_pos = rospy.Publisher('target_position', Point, queue_size=1)
 
 # define state Play
 class play(smach.State):
+
+    """
+        A class used to represent the PLAY behaviour
+        of the robot
+
+        Attributes
+        --------
+        @param arrived: Advise if the robot reaches the position
+        @type arrived: int
+        @param transition: Advise if it is necessary to change state (NORMAL)
+        @type transition: int
+        @param count: count the number of times it is performed the PLAY behaviour
+        @type count: int
+        @param transition_value: define the value at wich it is performed the state transition
+        @type transition_value: int
+
+        Methods
+        -----
+        getFeedback(data)
+            Callback method that received the "arrived" message and set the attribute
+            arrived to 1
+        getGesture(data)
+            Callback method that receives the pointed gesture and perform the PLAY 
+            behaviour
+        execute()
+            It publishes the person position and, after the robot reaches the position, it
+            subsribes to "gesture" topic. At the end, it waits for the state transition
+    """
+
     def __init__(self):
         # initialisation function, it should not wait
+
+        """
+            Constrcutor. It inizializes the attributes and subscribe to "feedback" topic
+        """
+
         smach.State.__init__(self,outcomes=['someTimes'])
         self.arrived = 0
         self.transition = 0
         self.count = 0
         self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
-
+        rospy.Subscriber("feedback", String, self.getFeedback)
+        
     def getFeedback(self,data):
+
+        """
+            Callback method that received the "arrived" message and set the attribute
+            arrived to 1
+
+            @param data: feedback message
+            @type data: str
+        """
+
         self.arrived = 1
     
     def getGesture(self,data):
+
+        """
+            Callback method that receives the pointed gesture and perform the PLAY 
+            behaviour
+
+            @param data: 2D pointed gesture
+            @type data: Point
+        """
+
         if self.transition == 0:
             pub_target_pos.publish(data)
             while self.arrived == 0:
@@ -63,14 +121,21 @@ class play(smach.State):
 
         
     def execute(self, userdata):
+
+        """
+            It publishes the person position and, after the robot reaches the position, it
+            subsribes to "gesture" topic. At the end, it waits for the state transition
+
+            @param userdata: used to pass data between states
+            @type userdata: list
+        """
+
         # function called when exiting from the node, it can be blacking
         self.arrived = 0
         self.transition = 0
         self.count = 0
         self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
         rospy.loginfo('Executing state PLAY')
-
-        sub_feedback = rospy.Subscriber("feedback", String, self.getFeedback)
 
         pub_target_pos.publish(person_pos)
 
@@ -84,59 +149,155 @@ class play(smach.State):
 
         while self.transition == 0:
             pass
-        sub_feedback.unregister()
         sub_gesture.unregister()
         return 'someTimes'
 
 # define state Sleep
 class sleep(smach.State):
+
+    """
+        A class used to represent the SLEEP behaviour
+        of the robot
+
+        Attributes
+        --------
+        @param arrived: Advise if the robot reaches the position
+        @type arrived: int
+
+        Methods
+        -----
+        getFeedback(data)
+            Callback method that received the "arrived" message,waits for a random number of
+            seconds and set the attribute arrived to 1
+        execute()
+            It publishes the home position and, after the robot reaches the position, it
+            changes the state to NORMAL
+    """
+
     def __init__(self):
+
+        """
+            Constrcutor. It inizializes the attribute and subscribe to "feedback" topic
+        """
+
         # initialisation function, it should not wait
         smach.State.__init__(self,outcomes=['wakeUp'])
         self.arrived = 0
+        rospy.Subscriber("feedback", String, self.getFeedback)
 
     def getFeedback(self,data):
+
+        """
+            Callback method that received the "arrived" message,waits for a random number of
+            seconds and set the attribute arrived to 1
+
+            @param data: feedback message
+            @type data: str
+        """
+
         time.sleep(random.uniform(min_sleep_delay,max_sleep_delay))
         self.arrived = 1
         
     def execute(self, userdata):
+
+        """
+            It publishes the home position and, after the robot reaches the position, it
+            changes the state to NORMAL
+
+            @param userdata: used to pass data between states
+            @type userdata: list
+        """
+
         # function called when exiting from the node, it can be blacking
         self.arrived = 0
         rospy.loginfo('Executing state SLEEP')
-
-        sub_feedback = rospy.Subscriber("feedback", String, self.getFeedback)
 
         pub_target_pos.publish(home_pos)
         
         while self.arrived == 0:
             pass
         rospy.loginfo("Robot arrived in home (%d,%d)",home_pos.x,home_pos.y)
-        sub_feedback.unregister()
         return 'wakeUp'
     
 
 # define state Normal
 class normal(smach.State):
+
+    """
+        A class used to represent the NORMAL behaviour
+        of the robot
+
+        Attributes
+        --------
+        @param arrived: Advise if the robot reaches the position
+        @type arrived: int
+        @param play: Advise if command "play" is arrived
+        @type play: int
+
+        Methods
+        -----
+        getFeedback(data)
+            Callback method that received the "arrived" message and set the attribute
+            arrived to 1
+        getCommand(data)
+            Callback method that sets the attribute play to 1
+        execute()
+            It publishes a random position and, after the robot reaches the position, it
+            checks if it necessary to change state (PLAY) or not
+    """
+
     def __init__(self):
+
+        """
+            Constrcutor. It inizializes the attributes and subscribe to "feedback" and
+            "command" topics
+        """
+
         smach.State.__init__(self,outcomes=['play','someTimes'])
         self.arrived = 0
         self.play = 0
+        rospy.Subscriber("command", String, self.getCommand)
+        rospy.Subscriber("feedback", String, self.getFeedback)
 
     def getFeedback(self,data):
+
+        """
+            Callback method that received the "arrived" message and set the attribute
+            arrived to 1
+
+            @param data: feedback message
+            @type data: str
+        """
+
         self.arrived = 1
 
     def getCommand(self,data):
+
+        """
+            Callback method that received the "play" command and set the attribute
+            play to 1
+
+            @param data: command message
+            @type data: str
+        """
+
         self.play = 1
 
     def execute(self, userdata):
+
+        """
+            It publishes a random position and, after the robot reaches the position, it
+            checks if it necessary to change state (PLAY) or not
+
+            @param userdata: used to pass data between states
+            @type userdata: list
+        """
 
         self.arrived = 0
         self.play = 0
 
         rospy.loginfo('Executing state NORMAL')
 
-        sub_command = rospy.Subscriber("command", String, self.getCommand)
-        sub_feedback = rospy.Subscriber("feedback", String, self.getFeedback)
         count_value = random.randint(min_transition_normal_sleep,max_transition_normal_sleep)
 
         for count in range(0,count_value):
@@ -150,16 +311,20 @@ class normal(smach.State):
             rospy.loginfo("Robot arrived in (%d,%d)",position.x,position.y)
             if self.play == 1:
                 rospy.loginfo("User says PLAY")
-                sub_command.unregister()
                 return 'play'
             else:
                 self.arrived = 0
 
-        sub_feedback.unregister()
         return 'someTimes'
 
         
 def main():
+
+    """
+        Main function that initializes the node and the FSM.
+        After that it starts the node and the FSM
+    """
+
     rospy.init_node('command_manager_state_machine')
     
     # Create a SMACH state machine

@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+
+"""
+    ROS node used to generate pointed gestures
+"""
+
 import rospy
 from geometry_msgs.msg import Point
 import random
@@ -14,6 +19,11 @@ min_delay_gesture = rospy.get_param("min_delay_gesture")
 max_delay_gesture = rospy.get_param("max_delay_gesture")
 
 def gesture_generator():
+
+    """
+        Main function that generates random pointed gestures 
+        and publish them on topic "gesture"
+    """
 
     pub = rospy.Publisher('gesture', Point, queue_size=10)
     rospy.init_node('gesture_node', anonymous=True)
