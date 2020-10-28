@@ -3,6 +3,24 @@
     <param name="home_pos_x" type="int" value="5" />
     <param name="home_pos_y" type="int" value="5" />
 
+    <param name="min_delay_command" type="double" value="1" />
+    <param name="max_delay_command" type="double" value="10" />
+
+    <param name="min_delay_gesture" type="double" value="1" />
+    <param name="max_delay_gesture" type="double" value="10" />
+
+    <param name="min_delay_robot_motion" type="double" value="0.1" />
+    <param name="max_delay_robot_motion" type="double" value="1" />
+
+    <param name="min_transition_play_normal" type="int" value="1" />
+    <param name="max_transition_play_normal" type="int" value="10" />
+
+    <param name="min_transition_normal_sleep" type="int" value="1" />
+    <param name="max_transition_normal_sleep" type="int" value="10" />
+
+    <param name="min_sleep_delay" type="double" value="1" />
+    <param name="max_sleep_delay" type="double" value="10" />
+
     <param name="person_pos_x" type="int" value="8" />
     <param name="person_pos_y" type="int" value="10" />
 

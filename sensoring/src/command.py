@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 import rospy
 from std_msgs.msg import String
-from random import randint
+import random
+
+min_delay_command = rospy.get_param("min_delay_command")
+max_delay_command = rospy.get_param("max_delay_command")
 
 def command_generator():
 
@@ -14,7 +17,7 @@ def command_generator():
         rospy.loginfo(command)
         pub.publish(command)
         #rate.sleep()
-        rospy.sleep(randint(1,10))
+        rospy.sleep(random.uniform(min_delay_command,max_delay_command))
 
 if __name__ == '__main__':
     try:

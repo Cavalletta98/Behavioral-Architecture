@@ -16,7 +16,7 @@ The architercture is composed by 4 components:
 ## State diagram
 The finite state machine is composed by 3 state (robot behaviours):
 
-    1. PLAY: robot moves from person position to pointed gestures and      viceversa
+    1. PLAY: robot moves from person position to pointed gestures and viceversa
 
     2. NORMAL (initial state): robot moves in a random ways
 
@@ -69,4 +69,4 @@ Once the map, home and person position are defined, the robot starts from the in
 Since the user command is implemented as a simulated one sended with random delays, it can happens that the robot often makes a transition between NORMAL and PLAY states without going in the SLEEP state (fewer times than the other transition).
 
 # Author
-@Cavalletta98 - simone.voto98@gmail.com
+[Simone Voto](https://github.com/Cavalletta98) - simone.voto98@gmail.com

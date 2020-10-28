@@ -5,7 +5,7 @@ import rospy
 import smach
 import smach_ros
 import time
-from random import randint
+import random
 from geometry_msgs.msg import Point
 from std_msgs.msg import String
 
@@ -20,6 +20,15 @@ person_pos.y = rospy.get_param("person_pos_y")
 map_x = rospy.get_param("map_x")
 map_y = rospy.get_param("map_y")
 
+min_transition_play_normal = rospy.get_param("min_transition_play_normal")
+max_transition_play_normal = rospy.get_param("max_transition_play_normal")
+
+min_transition_normal_sleep = rospy.get_param("min_transition_normal_sleep")
+max_transition_normal_sleep = rospy.get_param("max_transition_normal_sleep")
+
+min_sleep_delay = rospy.get_param("min_sleep_delay")
+max_sleep_delay = rospy.get_param("max_sleep_delay")
+
 pub_target_pos = rospy.Publisher('target_position', Point, queue_size=1)
 
 # define state Play
@@ -30,7 +39,7 @@ class play(smach.State):
         self.arrived = 0
         self.transition = 0
         self.count = 0
-        self.transition_value = randint(1,10)
+        self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
 
     def getFeedback(self,data):
         self.arrived = 1
@@ -58,7 +67,7 @@ class play(smach.State):
         self.arrived = 0
         self.transition = 0
         self.count = 0
-        self.transition_value = randint(1,10)
+        self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
         rospy.loginfo('Executing state PLAY')
 
         sub_feedback = rospy.Subscriber("feedback", String, self.getFeedback)
@@ -87,7 +96,7 @@ class sleep(smach.State):
         self.arrived = 0
 
     def getFeedback(self,data):
-        time.sleep(randint(1,10))
+        time.sleep(random.uniform(min_sleep_delay,max_sleep_delay))
         self.arrived = 1
         
     def execute(self, userdata):
@@ -128,12 +137,12 @@ class normal(smach.State):
 
         sub_command = rospy.Subscriber("command", String, self.getCommand)
         sub_feedback = rospy.Subscriber("feedback", String, self.getFeedback)
-        count_value = randint(1,10)
+        count_value = random.randint(min_transition_normal_sleep,max_transition_normal_sleep)
 
         for count in range(0,count_value):
             position = Point()
-            position.x = randint(1,map_x)
-            position.y = randint(1,map_y)
+            position.x = random.randint(1,map_x)
+            position.y = random.randint(1,map_y)
             pub_target_pos.publish(position)
 
             while self.arrived == 0:
@@ -153,7 +162,6 @@ class normal(smach.State):
 def main():
     rospy.init_node('command_manager_state_machine')
     
-
     # Create a SMACH state machine
     sm = smach.StateMachine(outcomes=['container_interface'])
     sm.userdata.sm_counter = 0
@@ -169,9 +177,6 @@ def main():
         smach.StateMachine.add('PLAY', play(), 
                                transitions={'someTimes':'NORMAL'})
         
-        
-
-
     # Create and start the introspection server for visualization
     sis = smach_ros.IntrospectionServer('server_name', sm, '/SM_ROOT')
     sis.start()
