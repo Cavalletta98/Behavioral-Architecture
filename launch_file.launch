@@ -6,8 +6,8 @@
     <param name="min_delay_command" type="double" value="1" />
     <param name="max_delay_command" type="double" value="10" />
 
-    <param name="min_delay_gesture" type="double" value="0.1" />
-    <param name="max_delay_gesture" type="double" value="1" />
+    <param name="min_delay_gesture" type="double" value="1" />
+    <param name="max_delay_gesture" type="double" value="10" />
 
     <param name="min_delay_robot_motion" type="double" value="0.1" />
     <param name="max_delay_robot_motion" type="double" value="1" />
@@ -27,7 +27,7 @@
     <param name="map_x" type="int" value="20" />
     <param name="map_y" type="int" value="20" />
 
-    <node name="motion_node" pkg="robot_control" type="motion.py" respawn="true"/>
+    <node name="motion_server" pkg="robot_control" type="motion.py" respawn="true"/>
     <node name="command_node" pkg="sensoring" type="command.py" respawn="true"/>
     <node name="gesture_node" pkg="sensoring" type="gesture.py" respawn="true"/>
     <node name="command_manager_state_machine" pkg="manager" type="command_manager.py" respawn="true" output="screen"/>

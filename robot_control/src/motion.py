@@ -4,43 +4,24 @@
     ROS node used to simulate robot motion
 """
 
+from robot_control.srv import TargetPos,TargetPosResponse
 import rospy
-from geometry_msgs.msg import Point
 import time
-from std_msgs.msg import String
 import random
 
 min_delay_robot_motion = rospy.get_param("min_delay_robot_motion")
 max_delay_robot_motion = rospy.get_param("max_delay_robot_motion")
 
-pub = rospy.Publisher('feedback', String, queue_size=10)
-
-def getTargetPos(data):
-
-    """
-        Callback function that sleeps for a random number
-        of seconds and publishes "arrived" on topic "feedback"
-
-        @param data: 2D target position
-        @type data: Point
-    """
-
+def handle_target_pos(req):
     time.sleep(random.uniform(min_delay_robot_motion,max_delay_robot_motion))
-    pub.publish("arrived")
- 
-def motion():
+    resp = TargetPosResponse()
+    resp.feedback = "arrived"
+    return resp
 
-    """
-        Main function that initializes the node and
-        subscribes to "target_position"
-    """
-
-    rospy.init_node('motion_node', anonymous=True)
-
-    rospy.Subscriber('target_position', Point, getTargetPos)
-
-    # spin() simply keeps python from exiting until this node is stopped
+def target_pos_server():
+    rospy.init_node('motion_server')
+    s = rospy.Service('target_pos', TargetPos, handle_target_pos)
     rospy.spin()
 
-if __name__ == '__main__':
-    motion()
+if __name__ == "__main__":
+    target_pos_server()

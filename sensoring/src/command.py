@@ -20,13 +20,11 @@ def command_generator():
 
     pub = rospy.Publisher('command', String, queue_size=1)
     rospy.init_node('command_node', anonymous=True)
-    #rate = rospy.Rate(randint(1,10)) # 10hz
 
     while not rospy.is_shutdown():
         command = "play"
         rospy.loginfo(command)
         pub.publish(command)
-        #rate.sleep()
         rospy.sleep(random.uniform(min_delay_command,max_delay_command))
 
 if __name__ == '__main__':

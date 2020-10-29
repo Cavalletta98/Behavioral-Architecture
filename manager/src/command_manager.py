@@ -13,6 +13,7 @@ import time
 import random
 from geometry_msgs.msg import Point
 from std_msgs.msg import String
+from robot_control.srv import TargetPos
 
 home_pos = Point()
 home_pos.x = rospy.get_param("home_pos_x")
@@ -33,8 +34,6 @@ max_transition_normal_sleep = rospy.get_param("max_transition_normal_sleep")
 
 min_sleep_delay = rospy.get_param("min_sleep_delay")
 max_sleep_delay = rospy.get_param("max_sleep_delay")
-
-pub_target_pos = rospy.Publisher('target_position', Point, queue_size=1)
 
 # define state Play
 class play(smach.State):
@@ -73,25 +72,17 @@ class play(smach.State):
         """
             Constrcutor. It inizializes the attributes and subscribe to "feedback" topic
         """
-
         smach.State.__init__(self,outcomes=['someTimes'])
-        self.arrived = 0
-        self.transition = 0
-        self.count = 0
         self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
-        rospy.Subscriber("feedback", String, self.getFeedback)
         
-    def getFeedback(self,data):
-
-        """
-            Callback method that received the "arrived" message and set the attribute
-            arrived to 1
-
-            @param data: feedback message
-            @type data: str
-        """
-
-        self.arrived = 1
+    def target_pos_client(self,x, y):
+        rospy.wait_for_service('target_pos')
+        try:
+            target_pos = rospy.ServiceProxy('target_pos', TargetPos)
+            resp = target_pos(x, y)
+            return resp
+        except rospy.ServiceException as e:
+            rospy.loginfo("Service call failed: %s"%e)
     
     def getGesture(self,data):
 
@@ -104,17 +95,10 @@ class play(smach.State):
         """
 
         if self.transition == 0:
-            pub_target_pos.publish(data)
-            while self.arrived == 0:
-                pass
+            self.target_pos_client(data.x,data.y)
             rospy.loginfo("Robot arrived in (%d,%d)",data.x,data.y)
-            self.arrived = 0
-            pub_target_pos.publish(person_pos)
-
-            while self.arrived == 0:
-                pass
+            self.target_pos_client(person_pos.x,person_pos.y)
             rospy.loginfo("Robot arrived in person position (%d,%d)",person_pos.x,person_pos.y)
-            self.arrived = 0
             self.count += 1
             if self.count == self.transition_value:
                 self.transition = 1
@@ -131,20 +115,15 @@ class play(smach.State):
         """
 
         # function called when exiting from the node, it can be blacking
-        self.arrived = 0
         self.transition = 0
         self.count = 0
         self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
         rospy.loginfo('Executing state PLAY')
 
-        pub_target_pos.publish(person_pos)
-
-        while self.arrived == 0:
-            pass
+        self.target_pos_client(person_pos.x,person_pos.y)
 
         rospy.loginfo("Robot arrived in person position (%d,%d)",person_pos.x,person_pos.y)
 
-        self.arrived = 0
         sub_gesture = rospy.Subscriber("gesture", Point, self.getGesture)
 
         while self.transition == 0:
@@ -182,21 +161,15 @@ class sleep(smach.State):
 
         # initialisation function, it should not wait
         smach.State.__init__(self,outcomes=['wakeUp'])
-        self.arrived = 0
-        rospy.Subscriber("feedback", String, self.getFeedback)
 
-    def getFeedback(self,data):
-
-        """
-            Callback method that received the "arrived" message,waits for a random number of
-            seconds and set the attribute arrived to 1
-
-            @param data: feedback message
-            @type data: str
-        """
-
-        time.sleep(random.uniform(min_sleep_delay,max_sleep_delay))
-        self.arrived = 1
+    def target_pos_client(self,x, y):
+        rospy.wait_for_service('target_pos')
+        try:
+            target_pos = rospy.ServiceProxy('target_pos', TargetPos)
+            resp = target_pos(x, y)
+            return resp
+        except rospy.ServiceException as e:
+            rospy.loginfo("Service call failed: %s"%e)
         
     def execute(self, userdata):
 
@@ -209,13 +182,10 @@ class sleep(smach.State):
         """
 
         # function called when exiting from the node, it can be blacking
-        self.arrived = 0
         rospy.loginfo('Executing state SLEEP')
 
-        pub_target_pos.publish(home_pos)
+        self.target_pos_client(home_pos.x,home_pos.y)
         
-        while self.arrived == 0:
-            pass
         rospy.loginfo("Robot arrived in home (%d,%d)",home_pos.x,home_pos.y)
         return 'wakeUp'
     
@@ -254,22 +224,16 @@ class normal(smach.State):
         """
 
         smach.State.__init__(self,outcomes=['play','someTimes'])
-        self.arrived = 0
-        self.play = 0
         rospy.Subscriber("command", String, self.getCommand)
-        rospy.Subscriber("feedback", String, self.getFeedback)
-
-    def getFeedback(self,data):
-
-        """
-            Callback method that received the "arrived" message and set the attribute
-            arrived to 1
-
-            @param data: feedback message
-            @type data: str
-        """
-
-        self.arrived = 1
+   
+    def target_pos_client(self,x, y):
+        rospy.wait_for_service('target_pos')
+        try:
+            target_pos = rospy.ServiceProxy('target_pos', TargetPos)
+            resp = target_pos(x, y)
+            return resp
+        except rospy.ServiceException as e:
+            rospy.loginfo("Service call failed: %s"%e)
 
     def getCommand(self,data):
 
@@ -292,8 +256,6 @@ class normal(smach.State):
             @param userdata: used to pass data between states
             @type userdata: list
         """
-
-        self.arrived = 0
         self.play = 0
 
         rospy.loginfo('Executing state NORMAL')
@@ -304,16 +266,12 @@ class normal(smach.State):
             position = Point()
             position.x = random.randint(1,map_x)
             position.y = random.randint(1,map_y)
-            pub_target_pos.publish(position)
+            self.target_pos_client(position.x,position.y)
 
-            while self.arrived == 0:
-                pass
             rospy.loginfo("Robot arrived in (%d,%d)",position.x,position.y)
             if self.play == 1:
                 rospy.loginfo("User says PLAY")
                 return 'play'
-            else:
-                self.arrived = 0
 
         return 'someTimes'
 
