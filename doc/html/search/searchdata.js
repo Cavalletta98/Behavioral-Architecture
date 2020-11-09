@@ -1,9 +1,11 @@
 var indexSectionsWithContent =
 {
-  0: "_cegmnps",
+  0: "_bceghmnpst",
   1: "nps",
   2: "cgm",
-  3: "_cegm"
+  3: "_ceghmt",
+  4: "hmp",
+  5: "b"
 };
 
 var indexSectionNames =
@@ -11,7 +13,9 @@ var indexSectionNames =
   0: "all",
   1: "classes",
   2: "namespaces",
-  3: "functions"
+  3: "functions",
+  4: "variables",
+  5: "pages"
 };
 
 var indexSectionLabels =
@@ -19,6 +23,8 @@ var indexSectionLabels =
   0: "All",
   1: "Classes",
   2: "Namespaces",
-  3: "Functions"
+  3: "Functions",
+  4: "Variables",
+  5: "Pages"
 };
 

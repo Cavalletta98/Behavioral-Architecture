@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Behavioral Architecture: Main Page</title>
+<title>Behavioral Architecture: Behavioral-Architecture</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,9 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Behavioral Architecture
-   &#160;<span id="projectnumber">1.0</span>
    </div>
-   <div id="projectbrief">A robot that interact with a human and moves in a discrete 2D environment</div>
   </td>
  </tr>
  </tbody>
@@ -62,11 +60,76 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Behavioral Architecture Documentation</div>  </div>
+<div class="title">Behavioral-Architecture </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p>A robot that interact with a human and moves in a discrete 2D environment</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Software architecture and states diagrams</h1>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Software architecture</h2>
+<p>The architercture is composed by 4 components: </p><pre class="fragment">1. Command: simulate user vocal command
+
+2. Gesture: simulate user pointed gestures
+
+3. Motion: simulate robot motion
+
+4. Command manager: implement robot behaviors through a FSM
+</pre><h2><a class="anchor" id="autotoc_md3"></a>
+State diagram</h2>
+<p>The finite state machine is composed by 3 state (robot behaviours): </p><pre class="fragment">1. PLAY: robot moves from person position to pointed gestures and viceversa
+
+2. NORMAL (initial state): robot moves in a random ways
+
+3. SLEEP: robot goes to home position and then goes to NORMAL state
+</pre><h2><a class="anchor" id="autotoc_md4"></a>
+ROS messages and parameters</h2>
+<p>The messages are:</p>
+<ul>
+<li><code>Point</code>: 2D position used for pointed gestures and target position</li>
+<li><code>String</code>: used for user command and feedback from "motion" component</li>
+</ul>
+<p>The parameters are:</p>
+<ul>
+<li><code>home_pos_x,home_pos_x</code>: define the home position in the map</li>
+<li><code>person_pos_x,person_pos_y</code>: define the person position in the map</li>
+<li><code>map_x,map_y</code>: define the dimensions of the map</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md5"></a>
+Packages and files</h1>
+<p>There are 3 packages:</p>
+<ul>
+<li><code>Sensoring</code>: contains the <a href="sensoring/src/command.py">command.py</a> and <a href="sensoring/src/gesture.py">gesture.py</a> files used to simulate the user command and pointed gestures</li>
+<li><code>Robot control</code>: contains the <a href="robot_control/src/motion.py">motion.py</a> file used to simulate robot motion</li>
+<li><code>Command manager</code>: contains the <a href="manager/src/command_manager">command_manager.py</a> file that implements the FSM of robot behaviours</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md6"></a>
+Installation and running</h1>
+<p>In order to run this software, the following prerequisities are needed:</p><ul>
+<li><a href="http://wiki.ros.org/noetic">ROS Noetic</a></li>
+<li><a href="http://wiki.ros.org/smach">smach</a></li>
+</ul>
+<p>Before running the software, you must have all files as executable otherwise you can make them executable with the following command </p><div class="fragment"><div class="line">cd &lt;your_workspace&gt;/src/Behavioral-Architecture</div>
+<div class="line">chmod +x sensoring/src/*</div>
+<div class="line">chmod +x robot_control/src/*</div>
+<div class="line">chmod +x manager/src/*</div>
+</div><!-- fragment --><p>To run the software </p><div class="fragment"><div class="line">cd &lt;your_workspace&gt;/src/Behavioral-Architecture</div>
+<div class="line">roslaunch launch_file.launch</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
+Working hypothesis and environment</h1>
+<p>The map is a descrite cartesian space where you can specify the dimensions for x and y axes.</p>
+<h1><a class="anchor" id="autotoc_md8"></a>
+System's features</h1>
+<p>Once the map, home and person position are defined, the robot starts from the initial state (NORMAL) and moves in all the generated positions and it makes transitions between states.</p>
+<h1><a class="anchor" id="autotoc_md9"></a>
+System's limitations</h1>
+<p>Since the user command is implemented as a simulated one sended with random delays, it can happens that the robot often makes a transition between NORMAL and PLAY states without going in the SLEEP state (fewer times than the other transition).</p>
+<h1><a class="anchor" id="autotoc_md10"></a>
+Author</h1>
+<p><a href="https://github.com/Cavalletta98">Simone Voto</a> - <a href="#" onclick="location.href='mai'+'lto:'+'sim'+'on'+'e.v'+'ot'+'o98'+'@g'+'mai'+'l.'+'com'; return false;">simon<span style="display: none;">.nosp@m.</span>e.vo<span style="display: none;">.nosp@m.</span>to98@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </p>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

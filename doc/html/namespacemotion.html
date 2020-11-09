@@ -22,9 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Behavioral Architecture
-   &#160;<span id="projectnumber">1.0</span>
    </div>
-   <div id="projectbrief">A robot that interact with a human and moves in a discrete 2D environment</div>
   </td>
  </tr>
  </tbody>
@@ -73,66 +71,93 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0a5e81df49394e3e4bf47ab5c08d266f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotion.html#a0a5e81df49394e3e4bf47ab5c08d266f">getTargetPos</a> (data)</td></tr>
-<tr class="separator:a0a5e81df49394e3e4bf47ab5c08d266f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5ed271d60f999c2f51c098031bbee83"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotion.html#ab5ed271d60f999c2f51c098031bbee83">motion</a> ()</td></tr>
-<tr class="separator:ab5ed271d60f999c2f51c098031bbee83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0df96ee385a18713a313057c3984fb40"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotion.html#a0df96ee385a18713a313057c3984fb40">handle_target_pos</a> (req)</td></tr>
+<tr class="separator:a0df96ee385a18713a313057c3984fb40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7baaf9fa787bb777f657a9411da6df51"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotion.html#a7baaf9fa787bb777f657a9411da6df51">target_pos_server</a> ()</td></tr>
+<tr class="separator:a7baaf9fa787bb777f657a9411da6df51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a52f463e6bd7a832ea0111e3e15b92984"><td class="memItemLeft" align="right" valign="top"><a id="a52f463e6bd7a832ea0111e3e15b92984"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>min_delay_robot_motion</b> = rospy.get_param(&quot;min_delay_robot_motion&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotion.html#a52f463e6bd7a832ea0111e3e15b92984">min_delay_robot_motion</a> = rospy.get_param(&quot;min_delay_robot_motion&quot;)</td></tr>
+<tr class="memdesc:a52f463e6bd7a832ea0111e3e15b92984"><td class="mdescLeft">&#160;</td><td class="mdescRight">Min delay for simulate the robot motion. <br /></td></tr>
 <tr class="separator:a52f463e6bd7a832ea0111e3e15b92984"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d3d2c15e92aa6b23e576e2f1b17cad2"><td class="memItemLeft" align="right" valign="top"><a id="a9d3d2c15e92aa6b23e576e2f1b17cad2"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>max_delay_robot_motion</b> = rospy.get_param(&quot;max_delay_robot_motion&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemotion.html#a9d3d2c15e92aa6b23e576e2f1b17cad2">max_delay_robot_motion</a> = rospy.get_param(&quot;max_delay_robot_motion&quot;)</td></tr>
+<tr class="memdesc:a9d3d2c15e92aa6b23e576e2f1b17cad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max delay for simulate the robot motion. <br /></td></tr>
 <tr class="separator:a9d3d2c15e92aa6b23e576e2f1b17cad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fc4b1684317b0279c0d5bf8550023cd"><td class="memItemLeft" align="right" valign="top"><a id="a0fc4b1684317b0279c0d5bf8550023cd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>pub</b> = rospy.Publisher('feedback', String, queue_size=10)</td></tr>
-<tr class="separator:a0fc4b1684317b0279c0d5bf8550023cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">    ROS node used to simulate robot motion
+<div class="textblock"><pre class="fragment">    ROS service used to simulate robot motion
 </pre> </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a0a5e81df49394e3e4bf47ab5c08d266f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a5e81df49394e3e4bf47ab5c08d266f">&#9670;&nbsp;</a></span>getTargetPos()</h2>
+<a id="a0df96ee385a18713a313057c3984fb40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0df96ee385a18713a313057c3984fb40">&#9670;&nbsp;</a></span>handle_target_pos()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def motion.getTargetPos </td>
+          <td class="memname">def motion.handle_target_pos </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
+          <td class="paramname"><em>req</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">    Callback function that sleeps for a random number
-    of seconds and publishes "arrived" on topic "feedback"
+<pre class="fragment">    Received a request (2D position), sleep for a random number fo seconds
+    and reply with "arrvied"
 
-    @param data: 2D target position
-    @type data: Point
+    @param req: requested data
+    @type req: TargetPosResponse
 </pre> 
+<p class="definition">Definition at line <a class="el" href="motion_8py_source.html#l00019">19</a> of file <a class="el" href="motion_8py_source.html">motion.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">def </span>handle_target_pos(req):</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="stringliteral">        Received a request (2D position), sleep for a random number fo seconds</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="stringliteral">        and reply with &quot;arrvied&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="stringliteral"></span> </div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="stringliteral">        @param req: requested data</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="stringliteral">        @type req: TargetPosResponse</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    time.sleep(random.uniform(min_delay_robot_motion,max_delay_robot_motion))</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    resp = TargetPosResponse()</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    resp.feedback = <span class="stringliteral">&quot;arrived&quot;</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordflow">return</span> resp</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+</div><!-- fragment -->
 </div>
 </div>
-<a id="ab5ed271d60f999c2f51c098031bbee83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5ed271d60f999c2f51c098031bbee83">&#9670;&nbsp;</a></span>motion()</h2>
+<a id="a7baaf9fa787bb777f657a9411da6df51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7baaf9fa787bb777f657a9411da6df51">&#9670;&nbsp;</a></span>target_pos_server()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">def motion.motion </td>
+          <td class="memname">def motion.target_pos_server </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">    Main function that initializes the node and
-    subscribes to "target_position"
+<pre class="fragment">    Initialize the ROS server
 </pre> 
+<p class="definition">Definition at line <a class="el" href="motion_8py_source.html#l00034">34</a> of file <a class="el" href="motion_8py_source.html">motion.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">def </span>target_pos_server():</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="stringliteral">        Initialize the ROS server</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    rospy.init_node(<span class="stringliteral">&#39;motion_server&#39;</span>)</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    s = rospy.Service(<span class="stringliteral">&#39;target_pos&#39;</span>, TargetPos, handle_target_pos)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    rospy.spin()</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

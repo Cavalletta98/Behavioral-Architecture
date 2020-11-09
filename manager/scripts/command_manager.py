@@ -5,6 +5,7 @@
     robot behaviours
 """
 
+# Import of libraries
 import roslib
 import rospy
 import smach
@@ -15,24 +16,33 @@ from geometry_msgs.msg import Point
 from std_msgs.msg import String
 from robot_control.srv import TargetPos
 
-home_pos = Point()
-home_pos.x = rospy.get_param("home_pos_x")
-home_pos.y = rospy.get_param("home_pos_y")
+## 2D home position
+home_pos = Point(rospy.get_param("home_pos_x"),rospy.get_param("home_pos_y"),0)
 
-person_pos = Point()
-person_pos.x = rospy.get_param("person_pos_x")
-person_pos.y = rospy.get_param("person_pos_y")
+## 2D person position
+person_pos = Point(rospy.get_param("person_pos_x"),rospy.get_param("person_pos_y"),0)
 
+## x coordinate of the map
 map_x = rospy.get_param("map_x")
+## y coordinate of the map
 map_y = rospy.get_param("map_y")
 
+## Min delay for transition between PLAY and NORMAL states
 min_transition_play_normal = rospy.get_param("min_transition_play_normal")
+
+## Max delay for transition between PLAY and NORMAL states
 max_transition_play_normal = rospy.get_param("max_transition_play_normal")
 
+## Min delay for transition between NORMAL and SLEEP states
 min_transition_normal_sleep = rospy.get_param("min_transition_normal_sleep")
+
+## Max delay for transition between NORMAL and SLEEP states
 max_transition_normal_sleep = rospy.get_param("max_transition_normal_sleep")
 
+## Min delay for SLEEP state
 min_sleep_delay = rospy.get_param("min_sleep_delay")
+
+## Max delay for SLEEP state
 max_sleep_delay = rospy.get_param("max_sleep_delay")
 
 # define state Play
@@ -44,20 +54,14 @@ class play(smach.State):
 
         Attributes
         --------
-        @param arrived: Advise if the robot reaches the position
-        @type arrived: int
-        @param transition: Advise if it is necessary to change state (NORMAL)
-        @type transition: int
-        @param count: count the number of times it is performed the PLAY behaviour
-        @type count: int
         @param transition_value: define the value at wich it is performed the state transition
         @type transition_value: int
 
         Methods
         -----
-        getFeedback(data)
-            Callback method that received the "arrived" message and set the attribute
-            arrived to 1
+        target_pos_client(x, y):
+            Makes a request to motion server using the target position (x,y) 
+            and wait for the response
         getGesture(data)
             Callback method that receives the pointed gesture and perform the PLAY 
             behaviour
@@ -70,19 +74,31 @@ class play(smach.State):
         # initialisation function, it should not wait
 
         """
-            Constrcutor. It inizializes the attributes and subscribe to "feedback" topic
+            Constrcutor. It inizializes the attribute
         """
         smach.State.__init__(self,outcomes=['someTimes'])
         self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
         
     def target_pos_client(self,x, y):
+
+        """
+            Makes a request to motion server using the target position (x,y) 
+            and wait for the response
+
+            @param x: x coordinate of the target position
+            @type x: int
+            @param y: y coordinate of the target position
+            @type y: int
+
+        """
+
         rospy.wait_for_service('target_pos')
         try:
             target_pos = rospy.ServiceProxy('target_pos', TargetPos)
             resp = target_pos(x, y)
             return resp
         except rospy.ServiceException as e:
-            rospy.loginfo("Service call failed: %s"%e)
+            rospy.logerr("Service call failed: %s",e)
     
     def getGesture(self,data):
 
@@ -138,13 +154,11 @@ class sleep(smach.State):
         A class used to represent the SLEEP behaviour
         of the robot
 
-        Attributes
-        --------
-        @param arrived: Advise if the robot reaches the position
-        @type arrived: int
-
         Methods
         -----
+        target_pos_client(x, y):
+            Makes a request to motion server using the target position (x,y) 
+            and wait for the response
         getFeedback(data)
             Callback method that received the "arrived" message,waits for a random number of
             seconds and set the attribute arrived to 1
@@ -156,20 +170,32 @@ class sleep(smach.State):
     def __init__(self):
 
         """
-            Constrcutor. It inizializes the attribute and subscribe to "feedback" topic
+            Constrcutor
         """
 
         # initialisation function, it should not wait
         smach.State.__init__(self,outcomes=['wakeUp'])
 
     def target_pos_client(self,x, y):
+
+        """
+            Makes a request to motion server using the target position (x,y) 
+            and wait for the response
+
+            @param x: x coordinate of the target position
+            @type x: int
+            @param y: y coordinate of the target position
+            @type y: int
+
+        """
+
         rospy.wait_for_service('target_pos')
         try:
             target_pos = rospy.ServiceProxy('target_pos', TargetPos)
             resp = target_pos(x, y)
             return resp
         except rospy.ServiceException as e:
-            rospy.loginfo("Service call failed: %s"%e)
+            rospy.logerr("Service call failed: %s",e)
         
     def execute(self, userdata):
 
@@ -197,15 +223,11 @@ class normal(smach.State):
         A class used to represent the NORMAL behaviour
         of the robot
 
-        Attributes
-        --------
-        @param arrived: Advise if the robot reaches the position
-        @type arrived: int
-        @param play: Advise if command "play" is arrived
-        @type play: int
-
         Methods
         -----
+        target_pos_client(x, y):
+            Makes a request to motion server using the target position (x,y) 
+            and wait for the response
         getFeedback(data)
             Callback method that received the "arrived" message and set the attribute
             arrived to 1
@@ -219,21 +241,32 @@ class normal(smach.State):
     def __init__(self):
 
         """
-            Constrcutor. It inizializes the attributes and subscribe to "feedback" and
-            "command" topics
+            Constrcutor. It subscribes to "command" topic
         """
 
         smach.State.__init__(self,outcomes=['play','someTimes'])
         rospy.Subscriber("command", String, self.getCommand)
    
     def target_pos_client(self,x, y):
+
+        """
+            Makes a request to motion server using the target position (x,y) 
+            and wait for the response
+
+            @param x: x coordinate of the target position
+            @type x: int
+            @param y: y coordinate of the target position
+            @type y: int
+
+        """
+
         rospy.wait_for_service('target_pos')
         try:
             target_pos = rospy.ServiceProxy('target_pos', TargetPos)
             resp = target_pos(x, y)
             return resp
         except rospy.ServiceException as e:
-            rospy.loginfo("Service call failed: %s"%e)
+            rospy.logerr("Service call failed: %s",e)
 
     def getCommand(self,data):
 

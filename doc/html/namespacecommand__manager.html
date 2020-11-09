@@ -22,9 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Behavioral Architecture
-   &#160;<span id="projectnumber">1.0</span>
    </div>
-   <div id="projectbrief">A robot that interact with a human and moves in a discrete 2D environment</div>
   </td>
  </tr>
  </tbody>
@@ -89,44 +87,45 @@ Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:aeea395dc93fa4a9782c8fbfd9a1f98b0"><td class="memItemLeft" align="right" valign="top"><a id="aeea395dc93fa4a9782c8fbfd9a1f98b0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>home_pos</b> = Point()</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#aeea395dc93fa4a9782c8fbfd9a1f98b0">home_pos</a> = Point(rospy.get_param(&quot;home_pos_x&quot;),rospy.get_param(&quot;home_pos_y&quot;),0)</td></tr>
+<tr class="memdesc:aeea395dc93fa4a9782c8fbfd9a1f98b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D home position <br /></td></tr>
 <tr class="separator:aeea395dc93fa4a9782c8fbfd9a1f98b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e9b527bc4d44ff32abc6152376f9346"><td class="memItemLeft" align="right" valign="top"><a id="a3e9b527bc4d44ff32abc6152376f9346"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>x</b></td></tr>
-<tr class="separator:a3e9b527bc4d44ff32abc6152376f9346"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac82e7ace6a5c42554cf0aa5c9f400fa8"><td class="memItemLeft" align="right" valign="top"><a id="ac82e7ace6a5c42554cf0aa5c9f400fa8"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>y</b></td></tr>
-<tr class="separator:ac82e7ace6a5c42554cf0aa5c9f400fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0305de9861e7ad4d743c4c2d877d2703"><td class="memItemLeft" align="right" valign="top"><a id="a0305de9861e7ad4d743c4c2d877d2703"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>person_pos</b> = Point()</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#a0305de9861e7ad4d743c4c2d877d2703">person_pos</a> = Point(rospy.get_param(&quot;person_pos_x&quot;),rospy.get_param(&quot;person_pos_y&quot;),0)</td></tr>
+<tr class="memdesc:a0305de9861e7ad4d743c4c2d877d2703"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D person position <br /></td></tr>
 <tr class="separator:a0305de9861e7ad4d743c4c2d877d2703"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb3b5bc736cc7329df092db97b349b6e"><td class="memItemLeft" align="right" valign="top"><a id="afb3b5bc736cc7329df092db97b349b6e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>map_x</b> = rospy.get_param(&quot;map_x&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#afb3b5bc736cc7329df092db97b349b6e">map_x</a> = rospy.get_param(&quot;map_x&quot;)</td></tr>
+<tr class="memdesc:afb3b5bc736cc7329df092db97b349b6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">x coordinate of the map <br /></td></tr>
 <tr class="separator:afb3b5bc736cc7329df092db97b349b6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fdf429f56c69731606f3789230177fd"><td class="memItemLeft" align="right" valign="top"><a id="a3fdf429f56c69731606f3789230177fd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>map_y</b> = rospy.get_param(&quot;map_y&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#a3fdf429f56c69731606f3789230177fd">map_y</a> = rospy.get_param(&quot;map_y&quot;)</td></tr>
+<tr class="memdesc:a3fdf429f56c69731606f3789230177fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">y coordinate of the map <br /></td></tr>
 <tr class="separator:a3fdf429f56c69731606f3789230177fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a7a4dde670c0a118fc088968f5e106c"><td class="memItemLeft" align="right" valign="top"><a id="a3a7a4dde670c0a118fc088968f5e106c"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>min_transition_play_normal</b> = rospy.get_param(&quot;min_transition_play_normal&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#a3a7a4dde670c0a118fc088968f5e106c">min_transition_play_normal</a> = rospy.get_param(&quot;min_transition_play_normal&quot;)</td></tr>
+<tr class="memdesc:a3a7a4dde670c0a118fc088968f5e106c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Min delay for transition between PLAY and NORMAL states. <br /></td></tr>
 <tr class="separator:a3a7a4dde670c0a118fc088968f5e106c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7ab4f1b208bf8370752dba5c45aad05"><td class="memItemLeft" align="right" valign="top"><a id="aa7ab4f1b208bf8370752dba5c45aad05"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>max_transition_play_normal</b> = rospy.get_param(&quot;max_transition_play_normal&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#aa7ab4f1b208bf8370752dba5c45aad05">max_transition_play_normal</a> = rospy.get_param(&quot;max_transition_play_normal&quot;)</td></tr>
+<tr class="memdesc:aa7ab4f1b208bf8370752dba5c45aad05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max delay for transition between PLAY and NORMAL states. <br /></td></tr>
 <tr class="separator:aa7ab4f1b208bf8370752dba5c45aad05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ed8fec1281a27ad0d3d91c7c7b16f2e"><td class="memItemLeft" align="right" valign="top"><a id="a0ed8fec1281a27ad0d3d91c7c7b16f2e"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>min_transition_normal_sleep</b> = rospy.get_param(&quot;min_transition_normal_sleep&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#a0ed8fec1281a27ad0d3d91c7c7b16f2e">min_transition_normal_sleep</a> = rospy.get_param(&quot;min_transition_normal_sleep&quot;)</td></tr>
+<tr class="memdesc:a0ed8fec1281a27ad0d3d91c7c7b16f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Min delay for transition between NORMAL and SLEEP states. <br /></td></tr>
 <tr class="separator:a0ed8fec1281a27ad0d3d91c7c7b16f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa09e4d4eb38db0ed1afc43ff54e86161"><td class="memItemLeft" align="right" valign="top"><a id="aa09e4d4eb38db0ed1afc43ff54e86161"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>max_transition_normal_sleep</b> = rospy.get_param(&quot;max_transition_normal_sleep&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#aa09e4d4eb38db0ed1afc43ff54e86161">max_transition_normal_sleep</a> = rospy.get_param(&quot;max_transition_normal_sleep&quot;)</td></tr>
+<tr class="memdesc:aa09e4d4eb38db0ed1afc43ff54e86161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max delay for transition between NORMAL and SLEEP states. <br /></td></tr>
 <tr class="separator:aa09e4d4eb38db0ed1afc43ff54e86161"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8df94afaf03ab6e8233d06d41363dc96"><td class="memItemLeft" align="right" valign="top"><a id="a8df94afaf03ab6e8233d06d41363dc96"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>min_sleep_delay</b> = rospy.get_param(&quot;min_sleep_delay&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#a8df94afaf03ab6e8233d06d41363dc96">min_sleep_delay</a> = rospy.get_param(&quot;min_sleep_delay&quot;)</td></tr>
+<tr class="memdesc:a8df94afaf03ab6e8233d06d41363dc96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Min delay for SLEEP state. <br /></td></tr>
 <tr class="separator:a8df94afaf03ab6e8233d06d41363dc96"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07cbc12b40a71d4ab648281a8a6f6a45"><td class="memItemLeft" align="right" valign="top"><a id="a07cbc12b40a71d4ab648281a8a6f6a45"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>max_sleep_delay</b> = rospy.get_param(&quot;max_sleep_delay&quot;)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecommand__manager.html#a07cbc12b40a71d4ab648281a8a6f6a45">max_sleep_delay</a> = rospy.get_param(&quot;max_sleep_delay&quot;)</td></tr>
+<tr class="memdesc:a07cbc12b40a71d4ab648281a8a6f6a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max delay for SLEEP state. <br /></td></tr>
 <tr class="separator:a07cbc12b40a71d4ab648281a8a6f6a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ea3c654c594d3ccc63b3388cc82106b"><td class="memItemLeft" align="right" valign="top"><a id="a4ea3c654c594d3ccc63b3388cc82106b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>pub_target_pos</b> = rospy.Publisher('target_position', Point, queue_size=1)</td></tr>
-<tr class="separator:a4ea3c654c594d3ccc63b3388cc82106b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">    ROS node that implement the FSM of 
@@ -149,6 +148,44 @@ Variables</h2></td></tr>
 <pre class="fragment">    Main function that initializes the node and the FSM.
     After that it starts the node and the FSM
 </pre> 
+<p class="definition">Definition at line <a class="el" href="command__manager_8py_source.html#l00312">312</a> of file <a class="el" href="command__manager_8py_source.html">command_manager.py</a>.</p>
+<div class="fragment"><div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;<span class="keyword">def </span>main():</div>
+<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;<span class="stringliteral">        Main function that initializes the node and the FSM.</span></div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="stringliteral">        After that it starts the node and the FSM</span></div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160; </div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    rospy.init_node(<span class="stringliteral">&#39;command_manager_state_machine&#39;</span>)</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;    </div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;    <span class="comment"># Create a SMACH state machine</span></div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    sm = smach.StateMachine(outcomes=[<span class="stringliteral">&#39;container_interface&#39;</span>])</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;    sm.userdata.sm_counter = 0</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    <span class="comment"># Open the container</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keyword">with</span> sm:</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;        <span class="comment"># Add states to the container</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;        smach.StateMachine.add(<span class="stringliteral">&#39;NORMAL&#39;</span>, normal(), </div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;                               transitions={<span class="stringliteral">&#39;play&#39;</span>:<span class="stringliteral">&#39;PLAY&#39;</span>, </div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;                                            <span class="stringliteral">&#39;someTimes&#39;</span>:<span class="stringliteral">&#39;SLEEP&#39;</span>})</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        smach.StateMachine.add(<span class="stringliteral">&#39;SLEEP&#39;</span>, sleep(), </div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                               transitions={<span class="stringliteral">&#39;wakeUp&#39;</span>:<span class="stringliteral">&#39;NORMAL&#39;</span>})</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        smach.StateMachine.add(<span class="stringliteral">&#39;PLAY&#39;</span>, play(), </div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;                               transitions={<span class="stringliteral">&#39;someTimes&#39;</span>:<span class="stringliteral">&#39;NORMAL&#39;</span>})</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;        </div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="comment"># Create and start the introspection server for visualization</span></div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    sis = smach_ros.IntrospectionServer(<span class="stringliteral">&#39;server_name&#39;</span>, sm, <span class="stringliteral">&#39;/SM_ROOT&#39;</span>)</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;    sis.start()</div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160; </div>
+<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="comment"># Execute the state machine</span></div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    outcome = sm.execute()</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    <span class="comment"># Wait for ctrl-c to stop the application</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    rospy.spin()</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    sis.stop()</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160; </div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->

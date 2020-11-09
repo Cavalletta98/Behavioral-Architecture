@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sleep_15',['sleep',['../classcommand__manager_1_1sleep.html',1,'command_manager']]]
+  ['normal_28',['normal',['../classcommand__manager_1_1normal.html',1,'command_manager']]]
 ];

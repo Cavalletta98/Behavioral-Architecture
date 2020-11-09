@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-"""
-    ROS node used to generate user command
-"""
+"""ROS node used to generate user command"""
 
+# Import of libraries
 import rospy
 from std_msgs.msg import String
 import random
 
+## Min delay for command generation
 min_delay_command = rospy.get_param("min_delay_command")
+
+## Max delay for command generation
 max_delay_command = rospy.get_param("max_delay_command")
 
 def command_generator():

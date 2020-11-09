@@ -4,18 +4,24 @@
     ROS node used to generate pointed gestures
 """
 
+# Import of libraries
 import rospy
 from geometry_msgs.msg import Point
 import random
 
+## x coordinate of the map
 map_x = rospy.get_param("map_x")
+
+## y coordinate of the map
 map_y = rospy.get_param("map_y")
 
-person_pos = Point()
-person_pos.x = rospy.get_param("person_pos_x")
-person_pos.y = rospy.get_param("person_pos_y")
+## 2D Person position
+person_pos = Point(rospy.get_param("person_pos_x"),rospy.get_param("person_pos_y"),0)
 
+## Min delay for gesture generation
 min_delay_gesture = rospy.get_param("min_delay_gesture")
+
+## Max delay for gesture generation
 max_delay_gesture = rospy.get_param("max_delay_gesture")
 
 def gesture_generator():
