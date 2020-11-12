@@ -4,7 +4,7 @@ var indexSectionsWithContent =
   1: "nps",
   2: "cgm",
   3: "_ceghmt",
-  4: "hmp",
+  4: "chmpt",
   5: "b"
 };
 

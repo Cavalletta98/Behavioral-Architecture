@@ -65,26 +65,34 @@ $(function() {
 <div class="title">Behavioral-Architecture </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>A robot that interact with a human and moves in a discrete 2D environment</p>
+<div class="textblock"><p>ROS architecture for simulating a robot into a discrete 2D enviroment. The robot has 3 behaviours:</p><ul>
+<li>Play</li>
+<li>Sleep</li>
+<li>Normal</li>
+</ul>
+<p>The user can interact with the robot via command and pointed gestures </p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Software architecture and states diagrams</h1>
 <h2><a class="anchor" id="autotoc_md2"></a>
 Software architecture</h2>
-<p>The architercture is composed by 4 components: </p><pre class="fragment">1. Command: simulate user vocal command
-
-2. Gesture: simulate user pointed gestures
-
-3. Motion: simulate robot motion
-
-4. Command manager: implement robot behaviors through a FSM
-</pre><h2><a class="anchor" id="autotoc_md3"></a>
+<p>The architercture is composed by 4 components:</p>
+<ul>
+<li>Command: simulate user vocal command</li>
+<li>Gesture: simulate user pointed gestures</li>
+<li>Motion: simulate robot motion</li>
+<li>Command manager: implement robot behaviors through a FSM</li>
+</ul>
+<p><img src="./images/Behavioral_Architecture.jpg" alt="" class="inline"/> </p>
+<h2><a class="anchor" id="autotoc_md3"></a>
 State diagram</h2>
-<p>The finite state machine is composed by 3 state (robot behaviours): </p><pre class="fragment">1. PLAY: robot moves from person position to pointed gestures and viceversa
-
-2. NORMAL (initial state): robot moves in a random ways
-
-3. SLEEP: robot goes to home position and then goes to NORMAL state
-</pre><h2><a class="anchor" id="autotoc_md4"></a>
+<p>The finite state machine is composed by 3 state (robot behaviours):</p>
+<ul>
+<li>PLAY: robot moves from person position to pointed gestures and viceversa</li>
+<li>NORMAL (initial state): robot moves in a random ways</li>
+<li>SLEEP: robot goes to home position and then goes to NORMAL state</li>
+</ul>
+<p><img src="./images/Behavioral_Architecture_FSM.jpg" alt="" class="inline"/> </p>
+<h2><a class="anchor" id="autotoc_md4"></a>
 ROS messages and parameters</h2>
 <p>The messages are:</p>
 <ul>
@@ -93,9 +101,15 @@ ROS messages and parameters</h2>
 </ul>
 <p>The parameters are:</p>
 <ul>
-<li><code>home_pos_x,home_pos_x</code>: define the home position in the map</li>
-<li><code>person_pos_x,person_pos_y</code>: define the person position in the map</li>
-<li><code>map_x,map_y</code>: define the dimensions of the map</li>
+<li><code>home_pos_x,home_pos_x</code>: define the home position in the map (double)</li>
+<li><code>person_pos_x,person_pos_y</code>: define the person position in the map (double)</li>
+<li><code>map_x,map_y</code>: define the dimensions of the map (integer)</li>
+<li><code>min_delay_command,max_delay_command</code>: define the min and max delay for sending the command "play" (double)</li>
+<li><code>min_delay_gesture,max_delay_gesture</code>: define the min and max delay for sending the pointed gesture (double)</li>
+<li><code>min_delay_robot_motion,max_delay_robot_motion</code>: define the min and max delay for simulating the robot motion (double)</li>
+<li><code>min_transition_play_normal,max_transition_play_normal</code>: define the min and max delay to trasit between PLAY and NORMAL (integer)</li>
+<li><code>min_transition_normal_sleep,max_transition_normal_sleep</code>: define the min and max delay to trasit between NORMAL and SLEEP (integer)</li>
+<li><code>min_sleep_delay,max_sleep_delay</code>: define the min and max delay for the SLEEP state (double)</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Packages and files</h1>
@@ -119,15 +133,36 @@ Installation and running</h1>
 <div class="line">roslaunch launch_file.launch</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md7"></a>
 Working hypothesis and environment</h1>
-<p>The map is a descrite cartesian space where you can specify the dimensions for x and y axes.</p>
+<p>The robot interact with a human via a command and pointed gestures. It moves inside a 2D discrete enviroment. Both robot targets position and pointed gestures belongs to the map. The robot has 3 behaviours: Play,Normal,Sleep. The robot can receive any command while executing PLAY state and it can receive any command or pointed gesture while executing SLEEP state but all of them are ignored while executing one of the two states. The initial state is NORMAL. The only command is "play". There two predifined positions inside the map ("Person" and "Home" position) that cannot be changed during the execution. When the robot moves, it cannot respond to other stimulus.</p>
 <h1><a class="anchor" id="autotoc_md8"></a>
 System's features</h1>
-<p>Once the map, home and person position are defined, the robot starts from the initial state (NORMAL) and moves in all the generated positions and it makes transitions between states.</p>
+<ul>
+<li>Specify different dimensions of the map</li>
+<li>It is possibile to define different delays for the simulation</li>
+<li>Define different position of the person and the "home" inside the map before start the simulation</li>
+<li>It is possible to visualize the state transition in the shell</li>
+<li>The robot will notify if it will reach the target position and it is possibile to visualize in the shell wich position the robot has reached</li>
+</ul>
 <h1><a class="anchor" id="autotoc_md9"></a>
 System's limitations</h1>
-<p>Since the user command is implemented as a simulated one sended with random delays, it can happens that the robot often makes a transition between NORMAL and PLAY states without going in the SLEEP state (fewer times than the other transition).</p>
+<ul>
+<li>There isn't a graphical interface for viewing the map and the robot motion.</li>
+<li>Commmand, pointed gesture and robot motion are simulated</li>
+<li>There isn't check if the user puts a position for the person or the "home" outside the map</li>
+<li>Since it is used ROS Noetic, the state transition visualization is limited to the shell (it is necessary to fix some files in order to use smach viewer)</li>
+</ul>
 <h1><a class="anchor" id="autotoc_md10"></a>
-Author</h1>
+Possible technical Improvements</h1>
+<ul>
+<li>Add other behaviours to the robot</li>
+<li>Use a graphical interface for viewing the simulation</li>
+<li>Add error handling in order to prevent some user position outside the map</li>
+<li>Implemente a real robot motion control</li>
+<li>Implements a user interface for the command</li>
+<li>Add more commands</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md11"></a>
+Author and contact</h1>
 <p><a href="https://github.com/Cavalletta98">Simone Voto</a> - <a href="#" onclick="location.href='mai'+'lto:'+'sim'+'on'+'e.v'+'ot'+'o98'+'@g'+'mai'+'l.'+'com'; return false;">simon<span style="display: none;">.nosp@m.</span>e.vo<span style="display: none;">.nosp@m.</span>to98@<span style="display: none;">.nosp@m.</span>gmai<span style="display: none;">.nosp@m.</span>l.com</a> </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

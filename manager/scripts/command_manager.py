@@ -57,6 +57,12 @@ class play(smach.State):
         @param transition_value: define the value at wich it is performed the state transition
         @type transition_value: int
 
+        @param transition: transition value to decide whenever we have to change state
+        @type transition: int
+
+        @param count: value to count how many times we perform the PLAY state before make a transition
+        @type count: int
+
         Methods
         -----
         target_pos_client(x, y):
@@ -77,6 +83,8 @@ class play(smach.State):
             Constrcutor. It inizializes the attribute
         """
         smach.State.__init__(self,outcomes=['someTimes'])
+
+        ## Define the value at wich it is performed the state transition
         self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
         
     def target_pos_client(self,x, y):
@@ -131,7 +139,11 @@ class play(smach.State):
         """
 
         # function called when exiting from the node, it can be blacking
+
+        ## Transition value to decide whenever we have to change state
         self.transition = 0
+
+        ## Value to count how many times we perform the PLAY state before make a transition
         self.count = 0
         self.transition_value = random.randint(min_transition_play_normal,max_transition_play_normal)
         rospy.loginfo('Executing state PLAY')
@@ -223,6 +235,11 @@ class normal(smach.State):
         A class used to represent the NORMAL behaviour
         of the robot
 
+        Attributes
+        -----
+        @param play: variable that will be set to 1 when the command "play" arrives
+        @type play: int
+
         Methods
         -----
         target_pos_client(x, y):
@@ -289,6 +306,8 @@ class normal(smach.State):
             @param userdata: used to pass data between states
             @type userdata: list
         """
+
+        ## Variable that will be set to 1 when the command "play" arrives
         self.play = 0
 
         rospy.loginfo('Executing state NORMAL')

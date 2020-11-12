@@ -80,18 +80,28 @@ roslaunch launch_file.launch
 ```
 
 # Working hypothesis and environment
-The robot interact with a human via a command and pointed gestures. It moves inside a 2D discrete enviroment. Both robot targets position and pointed gestures belongs to the map. The robot has 3 behaviours: Play,Normal,Sleep. The robot can receive any command while executing PLAY state and it can receive any command or pointed gesture while executing SLEEP state but all of them are ignored while executing one of the two states. The initial state is NORMAL. The only command is "play". There two predifined positions inside the map ("Person" and "Home" position) that cannot be changed during the execution.
+The robot interact with a human via a command and pointed gestures. It moves inside a 2D discrete enviroment. Both robot targets position and pointed gestures belongs to the map. The robot has 3 behaviours: Play,Normal,Sleep. The robot can receive any command while executing PLAY state and it can receive any command or pointed gesture while executing SLEEP state but all of them are ignored while executing one of the two states. The initial state is NORMAL. The only command is "play". There two predifined positions inside the map ("Person" and "Home" position) that cannot be changed during the execution. When the robot moves, it cannot respond to other stimulus.
 
 # System's features
 - Specify different dimensions of the map
 - It is possibile to define different delays for the simulation
+- Define different position of the person and the "home" inside the map before start the simulation
+- It is possible to visualize the state transition in the shell
+- The robot will notify if it will reach the target position and it is possibile to visualize in the shell wich position the robot has reached
 
 # System's limitations
-There isn't a graphical interface for viewing the map and the robot motion.
+- There isn't a graphical interface for viewing the map and the robot motion.
+- Commmand, pointed gesture and robot motion are simulated
+- There isn't check if the user puts a position for the person or the "home" outside the map
+- Since it is used ROS Noetic, the state transition visualization is limited to the shell (it is necessary to fix some files in order to use smach viewer)
 
-# Possible technical Improvements
+# Possible technical improvements
 - Add other behaviours to the robot
 - Use a graphical interface for viewing the simulation
+- Add error handling in order to prevent some user position outside the map
+- Implemente a real robot motion control
+- Implements a user interface for the command
+- Add more commands
 
 # Author and contact
 [Simone Voto](https://github.com/Cavalletta98) - simone.voto98@gmail.com
