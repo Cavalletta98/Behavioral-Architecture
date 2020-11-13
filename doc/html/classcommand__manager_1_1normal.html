@@ -217,8 +217,8 @@ Public Attributes</h2></td></tr>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160; </div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;        <span class="keywordflow">for</span> count <span class="keywordflow">in</span> range(0,count_value):</div>
 <div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;            position = Point()</div>
-<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            position.x = random.randint(1,map_x)</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            position.y = random.randint(1,map_y)</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;            position.x = random.randint(0,map_x)</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;            position.y = random.randint(0,map_y)</div>
 <div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;            self.target_pos_client(position.x,position.y)</div>
 <div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160; </div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            rospy.loginfo(<span class="stringliteral">&quot;Robot arrived in (%d,%d)&quot;</span>,position.x,position.y)</div>

@@ -36,8 +36,8 @@ def gesture_generator():
 
     while not rospy.is_shutdown():
         gesture_point = Point()
-        gesture_point.x = random.randint(1,map_x)
-        gesture_point.y = random.randint(1,map_y)
+        gesture_point.x = random.randint(0,map_x)
+        gesture_point.y = random.randint(0,map_y)
         if (gesture_point.x != person_pos.x) and (gesture_point.y != person_pos.y):
             rospy.loginfo(gesture_point)
             pub.publish(gesture_point)

@@ -316,8 +316,8 @@ class normal(smach.State):
 
         for count in range(0,count_value):
             position = Point()
-            position.x = random.randint(1,map_x)
-            position.y = random.randint(1,map_y)
+            position.x = random.randint(0,map_x)
+            position.y = random.randint(0,map_y)
             self.target_pos_client(position.x,position.y)
 
             rospy.loginfo("Robot arrived in (%d,%d)",position.x,position.y)
